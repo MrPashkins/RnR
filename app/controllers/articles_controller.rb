@@ -3,7 +3,12 @@ class ArticlesController < ApplicationController
   http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
 
   def index
-    @articles = Article.all
+    @articles = Article.all.order('created_at DESC')
+    if params[:search]
+    @articles = Article.search(params[:search]).order("created_at DESC")
+      else
+        @articles = Article.all.order('created_at DESC')
+    end
   end
 
   def show

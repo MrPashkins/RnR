@@ -2,10 +2,23 @@
 <%= link_to 'My Blog', controller: 'articles' %>
 <%= link_to 'New article', new_article_path %>
 
+
+<%= form_tag(articles_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :search, params[:search], placeholder: "Search Articles" %>
+<%= submit_tag "Search", :name => nil %>
+<% end %>
+
+<% if @article.present? %>
+  <%= render @article %>
+<% else %>
+  <p>There are no articles containing the term(s) <%= params[:search] %>.</p>
+<% end %>
+
 <table>
   <tr>
     <th>Title</th>
     <th>Text</th>
+    <th>Created</th>
     <th colspan="2"></th>
   </tr>
  
@@ -13,6 +26,7 @@
     <tr>
       <td><%= article.title %></td>
       <td><%= article.text %></td>
+      <td class= "date"> <%= article.created_at.strftime("%B, %d, %Y") %> </td>
       <td><%= link_to 'Show', article_path(article) %></td>
       <td><%= link_to 'Edit', edit_article_path(article) %></td>
       <td><%= link_to 'Destroy', article_path(article),
