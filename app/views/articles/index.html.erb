@@ -1,18 +1,6 @@
-<h1>Hello, Rails!</h1>
-<%= link_to 'My Blog', controller: 'articles' %>
-<%= link_to 'New article', new_article_path %>
-
-
-<%= form_tag(articles_path, :method => "get", id: "search-form") do %>
-<%= text_field_tag :search, params[:search], placeholder: "Search Articles" %>
-<%= submit_tag "Search", :name => nil %>
-<% end %>
-
-<% if @article.present? %>
-  <%= render @article %>
-<% else %>
-  <p>There are no articles containing the term(s) <%= params[:search] %>.</p>
-<% end %>
+<h1>Kind of a Blog</h1>
+<p><%= link_to 'To the articles', controller: 'articles' %></p>
+<p><%= link_to 'New article', new_article_path %></p>
 
 <table>
   <tr>
@@ -26,12 +14,17 @@
     <tr>
       <td><%= article.title %></td>
       <td><%= article.text %></td>
-      <td class= "date"> <%= article.created_at.strftime("%B, %d, %Y") %> </td>
+      <td> <%= article.created_at.strftime("%B, %d, %Y") %> </td>
       <td><%= link_to 'Show', article_path(article) %></td>
       <td><%= link_to 'Edit', edit_article_path(article) %></td>
-      <td><%= link_to 'Destroy', article_path(article),
+      <td><%= link_to 'Delete', article_path(article),
               method: :delete,
               data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 </table>
+
+<%= form_tag(articles_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :search, params[:search], placeholder: "Search Articles" %>
+<%= submit_tag "Search", :name => nil %>
+<% end %>
